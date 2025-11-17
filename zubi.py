@@ -54,7 +54,7 @@ def main():
         os.system("clear")
         exit("\033[91;1m 32Bit Device Not Supported")
     elif zubi == "64bit":
-        __import__("HA1")
+        __import__("HA")
 
 if __name__ == "__main__":
     main()

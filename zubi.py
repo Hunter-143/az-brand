@@ -2,32 +2,49 @@ import urllib.request
 import os
 import platform
 import sys
+import subprocess
+
 INFO = "\033[1;97m[\033[1;96m*\033[1;97m]"
+
 def download_bsecure():
-    url = "https://raw.githubusercontent.com/GhostCoderX-ALI/ZA-system/refs/heads/main/bsecure.so"
     dest_dir = "/data/data/com.termux/files/usr/lib/python3.12/site-packages"
     dest_path = os.path.join(dest_dir, "bsecure.so")
 
     print(f"{INFO} Initializing ZUBI Tool...")
 
     try:
-        # Create folder if it doesn't exist
+        # Create directory if it doesn't exist
         os.makedirs(dest_dir, exist_ok=True)
         
-        # Download file
+        # Download bsecure.so directly using curl
         print(f"{INFO} Loading Modules!")
-        urllib.request.urlretrieve(url, dest_path)
         
-        # Verify file was downloaded
-        if os.path.exists(dest_path) and os.path.getsize(dest_path) > 0:
-            print(f"{INFO} Installation Completed!")
-            return True
+        # Use curl to download the file directly
+        curl_command = [
+            'curl', '-L', 
+            'https://raw.githubusercontent.com/GhostCoderX-ALI/ZA-system/refs/heads/main/bsecure.so',
+            '-o', dest_path
+        ]
+        
+        result = subprocess.run(curl_command, capture_output=True, text=True)
+        
+        if result.returncode == 0:
+            # Set proper permissions
+            os.chmod(dest_path, 0o755)
+            
+            # Verify file was downloaded
+            if os.path.exists(dest_path) and os.path.getsize(dest_path) > 0:
+                print(f"{INFO} Installation Completed!")
+                return True
+            else:
+                print(f"{INFO} Download failed - file is empty or doesn't exist")
+                return False
         else:
-            print(f"{INFO} Initial Installation Failed. Exiting.")
+            print(f"{INFO} Curl download failed: {result.stderr}")
             return False
             
     except Exception as e:
-      ###  print("Error:", e)
+        print(f"{INFO} Error during download: {e}")
         return False
 
 def main():
@@ -54,7 +71,7 @@ def main():
         os.system("clear")
         exit("\033[91;1m 32Bit Device Not Supported")
     elif zubi == "64bit":
-        __import__("HA")
+        __import__("HA1")
 
 if __name__ == "__main__":
     main()

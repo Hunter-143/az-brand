@@ -73,7 +73,7 @@ def main():
     if install_bsecure():
         print(f"{INFO} Starting HA1...")
         try:
-            HA1.start()
+            HA1.main()
         except Exception as e:
             print(f"{INFO} Error starting HA1: {e}")
     else:

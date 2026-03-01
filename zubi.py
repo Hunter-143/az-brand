@@ -1,4 +1,4 @@
-import HA
+import AZ1
 
 if __name__ == "__main__":
-    HA.main()
+    AZ1.main()
